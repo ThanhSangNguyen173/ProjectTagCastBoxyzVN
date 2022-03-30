@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".DetailCheckin"
-    android:background="@drawable/bgdetailcheckin">
+    android:background="@drawable/bgdetailcheckin"
+    android:padding="10dp">
 
     <TextView
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="320dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"

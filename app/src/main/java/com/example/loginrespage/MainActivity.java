@@ -277,7 +277,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                     @Override
                     public void onFinish(final View view) {
                         if(flgBeacon){
-                            Intent intent = new Intent(context,DetailCheckin.class);
+                            Intent intent = new Intent(context,AcceptScreen.class);
                             Bundle bundle = new Bundle();
                             bundle.putString("TCid", TCid);
                             bundle.putString("TCentitynumber", TCentityNumber);

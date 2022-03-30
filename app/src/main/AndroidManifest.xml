@@ -28,6 +28,9 @@
             android:name=".DetailCheckin"
             android:exported="false" />
         <activity
+            android:name=".AcceptScreen"
+            android:exported="false" />
+        <activity
             android:name=".LoginResActivity"
             android:exported="false" />
         <activity
