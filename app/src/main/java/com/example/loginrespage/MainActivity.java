@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -44,6 +45,8 @@ import jp.tagcast.bleservice.TGCType;
 import jp.tagcast.bleservice.TagCast;
 import jp.tagcast.helper.TGCAdapter;
 
+
+
 public class MainActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     public TGCAdapter tgcAdapter;
@@ -56,6 +59,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
     private int soundIdStampDisplay;
     private int soundIdStampReduction;
     private int soundIdSignal;
+    private String TCentityNumber, TCid;
 
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
@@ -81,6 +85,8 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                 // Ngoài ra, khi thiết lập một worker thread, cần phải thực hiện nó để các luồng không bị phân tán.
                 if (tagCast.getTgcType() == TGCType.TGCTypePaperBeacon) {
                     flgBeacon = true;
+                    TCentityNumber = tagCast.getEntityNumber();
+                    TCid = tagCast.getSpotId();
                 }
             }
 
@@ -251,22 +257,8 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         scrollView.addView(scrollLayout, new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         final RelativeLayout bg = new RelativeLayout(context);
-        bg.setBackgroundResource(R.drawable.food_top);
+        bg.setBackgroundResource(R.drawable.bgprecheckin);
         scrollLayout.addView(bg, new LinearLayout.LayoutParams(Math.round(640f * scale), Math.round(1136f * scale)));
-
-        final View btnBack = new View(context);
-        btnBack.setBackgroundResource(R.drawable.common_btn_back);
-        rParam = new RelativeLayout.LayoutParams(Math.round(120f * scale), Math.round(88f * scale));
-        rParam.topMargin = Math.round(40f * scale);
-        bg.addView(btnBack,rParam);
-
-        View btnCheck = new View(context);
-        btnCheck.setBackgroundResource(R.drawable.btn_check);
-        rParam = new RelativeLayout.LayoutParams(Math.round(120f * scale), Math.round(88f * scale));
-        rParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rParam.topMargin = Math.round(44f * scale);
-        bg.addView(btnCheck,rParam);
-
         final View checkInBg = new View(context);
         checkInBg.setId(R.id.view2);
         checkInBg.setBackgroundColor(0x66000000);
@@ -285,10 +277,14 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                     @Override
                     public void onFinish(final View view) {
                         if(flgBeacon){
-                            startSuccessAnim(context,root,scale);
+                            Intent intent = new Intent(context,DetailCheckin.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("TCid", TCid);
+                            bundle.putString("TCentitynumber", TCentityNumber);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
                         }else{
                             showDialog(new AuthFailedDialogFragment());
-//                            startSuccessAnim(context,root,scale);
                             soundPool.play(soundIdSignal, 1.0f, 1.0f, 0, 0, 1.0f);
                         }
                         runOnUiThread(new Runnable() {
@@ -300,16 +296,6 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                     }
                 });
                 root.addView(loadingView,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                bg.setBackgroundResource(R.drawable.food_anm_bg);
-                btnBack.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(final View v) {
-                        Intent intent = new Intent(context,MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.no_animation_d100, R.anim.no_animation_d100);
-                    }
-                });
                 loadingView.start();
                 soundPool.play(soundIdButton, 1.0f, 1.0f, 0, 0, 1.0f);
             }
@@ -339,164 +325,6 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         }.start();
     }
 
-    private void startSuccessAnim(final Context context, final RelativeLayout root, final float scale){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final RelativeLayout layout = new RelativeLayout(context);
-                root.addView(layout,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
-                final View stamp = new View(context);
-                stamp.setId(R.id.view3);
-                stamp.setBackgroundResource(R.drawable.food_anm_stamp);
-                stamp.setAlpha(0);
-                RelativeLayout.LayoutParams rParam = new RelativeLayout.LayoutParams(Math.round(408f * scale), Math.round(304f * scale));
-                rParam.addRule(RelativeLayout.CENTER_IN_PARENT);
-                layout.addView(stamp,rParam);
-
-                ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(stamp, "alpha", 0f, 1f);
-                objectAnimator.setStartDelay(400);
-                objectAnimator.setDuration(400);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleX", 0.5f, 1.2f);
-                objectAnimator.setStartDelay(400);
-                objectAnimator.setDuration(400);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleY", 0.5f, 1.2f);
-                objectAnimator.setStartDelay(400);
-                objectAnimator.setDuration(400);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleX", 1.2f, 1f);
-                objectAnimator.setStartDelay(800);
-                objectAnimator.setDuration(100);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleY", 1.2f, 1f);
-                objectAnimator.setStartDelay(800);
-                objectAnimator.setDuration(100);
-                objectAnimator.start();
-
-                View light1 = new View(context);
-                light1.setBackgroundResource(R.drawable.food_anm_light);
-                light1.setAlpha(0);
-                rParam = new RelativeLayout.LayoutParams(Math.round(148f * scale), Math.round(170f * scale));
-                rParam.addRule(RelativeLayout.RIGHT_OF, R.id.view3);
-                rParam.addRule(RelativeLayout.ALIGN_TOP, R.id.view3);
-                rParam.leftMargin = -Math.round(120f * scale);
-                rParam.topMargin = -Math.round(52f * scale);
-                layout.addView(light1,rParam);
-                objectAnimator = ObjectAnimator.ofFloat(light1, "alpha", 0f, 1f);
-                objectAnimator.setStartDelay(1200);
-                objectAnimator.setDuration(200);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(light1, "alpha", 1f, 0f);
-                objectAnimator.setStartDelay(1400);
-                objectAnimator.setDuration(300);
-                objectAnimator.start();
-
-                View light2 = new View(context);
-                light2.setBackgroundResource(R.drawable.food_anm_light);
-                light2.setAlpha(0);
-                rParam = new RelativeLayout.LayoutParams(Math.round(148f * scale), Math.round(170f * scale));
-                rParam.addRule(RelativeLayout.LEFT_OF, R.id.view3);
-                rParam.addRule(RelativeLayout.ALIGN_TOP, R.id.view3);
-                rParam.rightMargin = -Math.round(90f * scale);
-                rParam.topMargin = Math.round(77f * scale);
-                layout.addView(light2,rParam);
-                objectAnimator = ObjectAnimator.ofFloat(light2, "alpha", 0f, 1f);
-                objectAnimator.setStartDelay(1400);
-                objectAnimator.setDuration(200);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(light2, "alpha", 1f, 0f);
-                objectAnimator.setStartDelay(1600);
-                objectAnimator.setDuration(300);
-                objectAnimator.start();
-
-                View light3 = new View(context);
-                light3.setBackgroundResource(R.drawable.food_anm_light);
-                light3.setAlpha(0);
-                rParam = new RelativeLayout.LayoutParams(Math.round(148f * scale),Math.round(170f * scale));
-                rParam.addRule(RelativeLayout.RIGHT_OF, R.id.view3);
-                rParam.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.view3);
-                rParam.leftMargin = - Math.round(90f * scale);
-                rParam.bottomMargin = - Math.round(96f * scale);
-                layout.addView(light3, rParam);
-                objectAnimator = ObjectAnimator.ofFloat(light3, "alpha", 0f, 1f);
-                objectAnimator.setStartDelay(1600);
-                objectAnimator.setDuration(200);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(light3, "alpha", 1f, 0f);
-                objectAnimator.setStartDelay(1800);
-                objectAnimator.setDuration(300);
-                objectAnimator.start();
-
-                final View checkInBg = findViewById(R.id.view2);
-                objectAnimator = ObjectAnimator.ofFloat(checkInBg, "alpha", 1f, 0f);
-                objectAnimator.setStartDelay(2300);
-                objectAnimator.setDuration(300);
-                objectAnimator.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(final Animator animation) {}
-                    @Override
-                    public void onAnimationEnd(final Animator animation) {
-                        soundPool.play(soundIdStampReduction, 1.0f, 1.0f, 0, 0, 1.0f);
-                    }
-                    @Override
-                    public void onAnimationCancel(final Animator animation) {}
-                    @Override
-                    public void onAnimationRepeat(final Animator animation) {}
-                });
-                objectAnimator.start();
-
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleX", 1f, 0.26f);
-                objectAnimator.setStartDelay(2600);
-                objectAnimator.setDuration(500);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleY", 1f, 0.26f);
-                objectAnimator.setStartDelay(2600);
-                objectAnimator.setDuration(500);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "translationX", 0, Math.round((176f + 53.04f) * scale));
-                objectAnimator.setStartDelay(2600);
-                objectAnimator.setDuration(500);
-                objectAnimator.start();
-                final int rootHeight = root.getHeight();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "translationY", 0, Math.round((160f + 39.52) * scale - rootHeight / 2f));
-                objectAnimator.setStartDelay(2600);
-                objectAnimator.setDuration(500);
-                objectAnimator.start();
-
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleX", 0.26f, 0.3f);
-                objectAnimator.setStartDelay(3100);
-                objectAnimator.setDuration(100);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleY", 0.26f, 0.3f);
-                objectAnimator.setStartDelay(3100);
-                objectAnimator.setDuration(100);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleX", 0.3f, 0.26f);
-                objectAnimator.setStartDelay(3200);
-                objectAnimator.setDuration(100);
-                objectAnimator.start();
-                objectAnimator = ObjectAnimator.ofFloat(stamp, "scaleY", 0.3f, 0.26f);
-                objectAnimator.setStartDelay(3200);
-                objectAnimator.setDuration(100);
-                objectAnimator.addListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(final Animator animation) {}
-                    @Override
-                    public void onAnimationEnd(final Animator animation) {
-                        checkInBg.setVisibility(View.INVISIBLE);
-                    }
-                    @Override
-                    public void onAnimationCancel(final Animator animation) {}
-                    @Override
-                    public void onAnimationRepeat(final Animator animation) {}
-                });
-                objectAnimator.start();
-                soundPool.play(soundIdStampDisplay, 1.0f, 1.0f, 0, 0, 1.0f);
-            }
-        });
-    }
 
     public static class LoadingDialogFragment extends DialogFragment {
         @Override
@@ -584,10 +412,12 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                 @Override
                 public void onClick(final View v) {
                     onDismiss(getDialog());
+
                     Intent intent = new Intent(activity, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.no_animation_d100, R.anim.no_animation_d100);
+
                 }
             });
 
@@ -602,6 +432,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
             lp.width = ViewGroup.LayoutParams.MATCH_PARENT;
             lp.height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setAttributes(lp);
+
         }
 
         @NonNull

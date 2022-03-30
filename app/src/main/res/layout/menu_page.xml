@@ -6,17 +6,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="@drawable/bgmenu"
+    android:background="#5880b3"
     tools:context=".Menu_page">
-
-
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginLeft="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"/>
         <SearchView
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:background="@color/white"
             android:queryHint="Tên món ăn"
-            android:layout_marginTop="90dp"
             android:iconifiedByDefault="false"
             android:layout_height="wrap_content"
             >

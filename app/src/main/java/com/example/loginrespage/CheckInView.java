@@ -27,10 +27,10 @@ public class CheckInView extends RelativeLayout {
 
     private void initialize(final Context context, final ViewGroup.LayoutParams params){
         LayoutParams rParam;
-        params.width = Math.round(626f * scale);
-        params.height = Math.round(582f * scale);
+        params.width = Math.round(640f * scale);
+        params.height = Math.round(1136f * scale);
         setLayoutParams(params);
-        setBackgroundResource(R.drawable.food_popup);
+        setBackgroundResource(R.drawable.bgcheckin);
 
         View checkInButton = new View(context);
         checkInButton.setBackgroundResource(R.drawable.btn_checkin);
@@ -40,7 +40,7 @@ public class CheckInView extends RelativeLayout {
         rParam.bottomMargin = Math.round(44f * scale);
         addView(checkInButton, rParam);
 
-        setTranslationY(Math.round(-582f * scale));
+        setTranslationY(Math.round(-1200f * scale));
 
 
         checkInButton.setOnClickListener(new OnClickListener() {
@@ -55,16 +55,16 @@ public class CheckInView extends RelativeLayout {
     }
 
     public void open(){
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "translationY", Math.round(-582f * scale), 0f);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "translationY", Math.round(-1136f * scale), 0f);
         objectAnimator.setStartDelay(0);
-        objectAnimator.setDuration(400);
+        objectAnimator.setDuration(2500);
         objectAnimator.start();
     }
 
     private void close(){
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "translationY", 0f, Math.round(-582f * scale));
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "translationY", 0f, Math.round(-1136f * scale));
         objectAnimator.setStartDelay(0);
-        objectAnimator.setDuration(200);
+        objectAnimator.setDuration(500);
         objectAnimator.start();
     }
 }
