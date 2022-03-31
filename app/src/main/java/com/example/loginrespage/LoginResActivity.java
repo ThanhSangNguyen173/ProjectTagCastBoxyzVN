@@ -48,10 +48,12 @@ public class LoginResActivity extends AppCompatActivity {
                     if(str1.equals(taikhoan) && str2.equals(matkhau)){
                         Intent intent1 = new Intent(LoginResActivity.this, MainActivity.class);
                         startActivity(intent1);
+                        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
                         Toast.makeText(LoginResActivity.this, "Welcome back, " + str1, Toast.LENGTH_SHORT).show();
                     }else if(str1.equals("sangthuanhung") && str2.equals("1")){
                         Intent intent2 = new Intent(LoginResActivity.this, MainActivity.class);
                         startActivity(intent2);
+                        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
                         Toast.makeText(LoginResActivity.this, "Welcome back, " + str1, Toast.LENGTH_SHORT).show();
                     }else {
                         Toast.makeText(LoginResActivity.this, "Vui lòng kiểm tra lại ID/Password!", Toast.LENGTH_SHORT).show();

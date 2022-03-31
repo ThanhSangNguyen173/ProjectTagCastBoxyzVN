@@ -30,6 +30,7 @@ public class intro extends AppCompatActivity {
             public void run() {
                 Intent intro = new Intent(getApplicationContext(),ViewFlipperIntro.class);
                 startActivity(intro);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
                 finish();
             }
         }, 4000);

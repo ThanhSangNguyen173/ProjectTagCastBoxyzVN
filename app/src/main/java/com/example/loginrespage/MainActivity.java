@@ -37,6 +37,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import java.util.List;
+import java.util.Map;
 
 import jp.tagcast.bleservice.TGCErrorCode;
 import jp.tagcast.bleservice.TGCScanListener;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
     private int soundIdStampDisplay;
     private int soundIdStampReduction;
     private int soundIdSignal;
-    private String TCentityNumber, TCid;
+    private String TCentityNumber, TCid, location;
 
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
@@ -87,6 +88,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                     flgBeacon = true;
                     TCentityNumber = tagCast.getEntityNumber();
                     TCid = tagCast.getSpotId();
+
                 }
             }
 

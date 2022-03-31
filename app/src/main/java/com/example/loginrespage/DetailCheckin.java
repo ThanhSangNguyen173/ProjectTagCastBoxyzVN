@@ -1,5 +1,6 @@
 package com.example.loginrespage;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 public class DetailCheckin extends AppCompatActivity {
 
     TextView txtID,txtEntityNumber;
     Button btn_go_to_menu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class DetailCheckin extends AppCompatActivity {
         btn_go_to_menu = findViewById(R.id.btn_go_to_menu);
         txtEntityNumber = findViewById(R.id.txt_EntityNumber);
         txtID = findViewById(R.id.txtID);
+
 
         Bundle bundle = getIntent().getExtras();
         String TCid = bundle.getString("TCid");
@@ -39,4 +43,5 @@ public class DetailCheckin extends AppCompatActivity {
 
 
     }
+
 }

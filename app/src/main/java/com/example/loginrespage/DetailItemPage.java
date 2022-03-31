@@ -38,6 +38,7 @@ public class DetailItemPage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DetailItemPage.this,Menu_page.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
             }
         });
 

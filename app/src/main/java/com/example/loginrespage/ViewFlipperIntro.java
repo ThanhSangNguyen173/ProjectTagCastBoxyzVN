@@ -44,6 +44,7 @@ public class ViewFlipperIntro extends AppCompatActivity {
                 Intent intent_JoinIn = new Intent();
                 intent_JoinIn.setClass(ViewFlipperIntro.this,LoginResActivity.class);
                 startActivity(intent_JoinIn);
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
             }
         });
 
