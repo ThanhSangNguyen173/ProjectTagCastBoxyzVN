@@ -56,8 +56,8 @@ public class LoadingView extends View {
                     }
                     animCount = (int) (nowTime - startTime);
                     postInvalidate();
-                    if (animCount >= 3000) {
-                        animCount = 3000;
+                    if (animCount >= 10000) {
+                        animCount = 10000;
                         break;
                     }
                 }
@@ -115,9 +115,9 @@ public class LoadingView extends View {
         final float cy = height/2f;
 
         int defAlpha = 255;
-        if (animCount > 2700) {
-            if (animCount < 3000) {
-                defAlpha = Math.round(((3000 - animCount) / 300f) * 255f);
+        if (animCount > 9700) {
+            if (animCount < 10000) {
+                defAlpha = Math.round(((10000 - animCount) / 300f) * 255f);
             } else  {
                 defAlpha = 0;
             }
@@ -149,9 +149,9 @@ public class LoadingView extends View {
             dst.bottom = dst.top + src.bottom * scale;
             final float alpha;
             if (animCount < 600) {
-                alpha = 1f -(600 - animCount) / 100f;
+                alpha = 0f;
             } else if (animCount < 1000) {
-                alpha = 1.0f;
+                alpha = 1f - (1000 - animCount) / 400f;
             } else if (animCount < 1300) {
                 alpha = (1300 - animCount) / 300f;
             } else if (animCount < 1400) {
@@ -161,6 +161,48 @@ public class LoadingView extends View {
             } else if (animCount < 2100) {
                 alpha = (2100 - animCount) / 300f;
             } else if (animCount < 2200) {
+                alpha = 0f;
+            } else if (animCount < 2600) {
+                alpha = 1f - (2600 - animCount) / 400f;
+            } else if (animCount < 3000) {
+                alpha = (3000 - animCount) / 300f;
+            } else if (animCount < 3200) {
+                alpha = 0f;
+            } else if (animCount < 3600) {
+                alpha = 1f - (3600 - animCount) / 400f;
+            } else if (animCount < 4100) {
+                alpha = (4100 - animCount) / 300f;
+            } else if (animCount < 4200) {
+                alpha = 0f;
+            } else if (animCount < 4600) {
+                alpha = 1f - (4600 - animCount) / 400f;
+            } else if (animCount < 5000) {
+                alpha = (5000 - animCount) / 300f;
+            } else if (animCount < 5200) {
+                alpha = 0f;
+            } else if (animCount < 5600) {
+                alpha = 1f - (5600 - animCount) / 400f;
+            } else if (animCount < 6100) {
+                alpha = (6100 - animCount) / 300f;
+            } else if (animCount < 6200) {
+                alpha = 0f;
+            } else if (animCount < 6600) {
+                alpha = 1f - (6600 - animCount) / 400f;
+            } else if (animCount < 7000) {
+                alpha = (7000 - animCount) / 300f;
+            } else if (animCount < 7200) {
+                alpha = 0f;
+            } else if (animCount < 7600) {
+                alpha = 1f - (7600 - animCount) / 400f;
+            } else if (animCount < 8100) {
+                alpha = (8100 - animCount) / 300f;
+            } else if (animCount < 8200) {
+                alpha = 0f;
+            } else if (animCount < 8600) {
+                alpha = 1f - (8600 - animCount) / 400f;
+            } else if (animCount < 9000) {
+                alpha = (9000 - animCount) / 300f;
+            } else if (animCount < 9200) {
                 alpha = 0f;
             } else {
                 alpha = 1.0f;
@@ -182,13 +224,46 @@ public class LoadingView extends View {
             paintDef.setColor(0xffffffff);
             paintDef.setAlpha(defAlpha);
             float angle;
-            if (animCount < 1000){
-                angle = (1f - (1000 - animCount) / 300f) * 133.2f;
-            } else if (animCount < 1800) {
-                angle = (1f - (1800 - animCount) / 800f) * 90f + 133.2f;
-            } else if (animCount < 2100) {
-                angle = (1f - (2100 - animCount) / 300f) * 136.8f + 223.2f;
-            } else {
+            if (animCount < 500){
+                angle = 18f ;
+            } else if (animCount < 1000) {
+                angle = 36f ;
+            } else if (animCount < 1500) {
+                angle = 54f ;
+            } else if(animCount < 2000){
+                angle = 72f;
+            } else if (animCount < 2500) {
+                angle =90f ;
+            } else if (animCount < 3000) {
+                angle = 108f;
+            }else if (animCount < 3500) {
+                angle =126f  ;
+            } else if(animCount < 4000){
+                angle = 144f;
+            } else if (animCount < 4500) {
+                angle = 162f;
+            } else if (animCount < 5000) {
+                angle =180f ;
+            }else if (animCount < 5500) {
+                angle = 198f;
+            } else if (animCount < 6000) {
+                angle = 216f ;
+            } else if(animCount < 6500){
+                angle =234f ;
+            } else if (animCount < 7000) {
+                angle = 252f;
+            } else if (animCount < 7500) {
+                angle =270f ;
+            }else if (animCount < 8000) {
+                angle = 288f ;
+            } else if(animCount < 8500){
+                angle =306f ;
+            } else if (animCount < 9000) {
+                angle =324f;
+            } else if (animCount < 9500) {
+                angle=342f;
+            }
+            else {
                 angle = 360f;
             }
             canvas.drawArc(dst, -90, angle, true, paintDef);
@@ -204,7 +279,7 @@ public class LoadingView extends View {
             dst.bottom = dst.top + src.bottom * scale;
             paintDef.setAlpha(defAlpha);
             paintBuilding.setAlpha(defAlpha);
-            if (animCount < 2200) {
+            if (animCount < 9500) {
                 canvas.drawBitmap(bmpBuilding, src, dst, paintDef);
             } else {
                 canvas.drawBitmap(bmpBuilding, src, dst, paintBuilding);

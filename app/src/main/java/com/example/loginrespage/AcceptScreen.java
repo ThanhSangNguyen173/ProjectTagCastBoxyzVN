@@ -26,6 +26,9 @@ public class AcceptScreen extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         String TCid = bundle.getString("TCid");
+        String longmap = bundle.getString("long");
+        String latmap = bundle.getString("lat");
+        String serial = bundle.getString("seri");
         String TCentityNumber = bundle.getString("TCentitynumber");
 
 
@@ -36,6 +39,9 @@ public class AcceptScreen extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("TCid", TCid);
                 bundle.putString("TCentitynumber", TCentityNumber);
+                bundle.putString("long",longmap);
+                bundle.putString("seri",serial);
+                bundle.putString("lat",latmap);
                 i.putExtras(bundle);
                 startActivity(i);
             }

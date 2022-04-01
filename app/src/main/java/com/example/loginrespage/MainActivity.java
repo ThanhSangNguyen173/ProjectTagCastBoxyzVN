@@ -20,6 +20,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -60,7 +61,8 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
     private int soundIdStampDisplay;
     private int soundIdStampReduction;
     private int soundIdSignal;
-    private String TCentityNumber, TCid, location;
+    private String TCentityNumber, TCid, longmap,latmap, serial;
+    private Map<String,String> map;
 
     public int mErrorDialogType = ErrorDialogFragment.TYPE_NO;
 
@@ -88,7 +90,11 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                     flgBeacon = true;
                     TCentityNumber = tagCast.getEntityNumber();
                     TCid = tagCast.getSpotId();
-
+                    map = tagCast.getDetails();
+                    Log.e("here", map.toString());
+                    latmap = map.get("latitude");
+                    longmap = map.get("longitude");
+                    serial = map.get("serial_id");
                 }
             }
 
@@ -202,6 +208,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         super.onResume();
         if (checkPermission()) {
             // Bắt đầu quét
+            tgcAdapter.setScanInterval(10000);
             tgcAdapter.startScan();
         }
         final LoadingDialogFragment loading = new LoadingDialogFragment();
@@ -283,6 +290,9 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                             Bundle bundle = new Bundle();
                             bundle.putString("TCid", TCid);
                             bundle.putString("TCentitynumber", TCentityNumber);
+                            bundle.putString("long",longmap);
+                            bundle.putString("lat",latmap);
+                            bundle.putString("seri",serial);
                             intent.putExtras(bundle);
                             startActivity(intent);
                         }else{
@@ -503,6 +513,7 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
                 // Thu thập dữ liệu quản lý TAGCAST
                 tgcAdapter.prepare();
                     // Bắt đầu quét
+                tgcAdapter.setScanInterval(10000);
                 tgcAdapter.startScan();
             } else {
                 finish();

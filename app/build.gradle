@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'realm-android'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -8,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.loginrespage"
-        minSdk 18
+        minSdk 19
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -47,4 +48,5 @@ dependencies {
     implementation 'com.android.support:support-annotations:22.0.0'
     implementation 'com.google.android.gms:play-services-ads:7.5.0'
     implementation 'com.airbnb.android:lottie:3.7.0'
+    implementation 'com.google.android.gms:play-services-maps:7.5.0'
 }

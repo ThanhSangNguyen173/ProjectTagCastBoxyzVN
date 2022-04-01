@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
 
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBJXcAVPe6404XYdMqa4yA1A54l1C0885g" />
+
     <application
         android:name=".AppInfo"
         android:allowBackup="true"
