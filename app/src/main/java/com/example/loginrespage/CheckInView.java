@@ -42,7 +42,6 @@ public class CheckInView extends RelativeLayout {
 
         setTranslationY(Math.round(-1200f * scale));
 
-
         checkInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {

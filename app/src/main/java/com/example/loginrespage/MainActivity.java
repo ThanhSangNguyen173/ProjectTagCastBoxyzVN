@@ -337,7 +337,9 @@ public class MainActivity extends Activity implements ActivityCompat.OnRequestPe
         }.start();
     }
 
-
+    /**
+     *
+     */
     public static class LoadingDialogFragment extends DialogFragment {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
